@@ -1,0 +1,64 @@
+---
+title: ShellSage Loves iTerm
+author: Alexis Gallagher
+date: 2024-12-10
+---
+
+This is a quick note on a convenient way to use Nate Cooper's [ShellSage](https://www.answer.ai/posts/2024-12-05-introducing-shell-sage.html), one of the coolest pieces of tech to come out of AnswerAI recently.
+
+As Nate notes, ShellSage relies on tmux to do its magic. tmux is a terminal *multiplexer*. It traditionally sits in between your terminal emulator (like Terminal.app on macOS) and one or more shells (like bash). Sitting in between is what allows it to see your incoming commands, and their output, and make that context available to an AI.
+
+## iTerm2 and tmux control mode
+
+But, what if you're not interested in multiplexing as such? In particular, you might not want to learn the tmux keyboard commands for switching between tmux panes, or to use the tmux visual interface which places multiple panes into one terminal window.
+
+If your main interest in tmux is just to enable ShellSage, then you might want to explore tmux *control mode*, a feature available in [iTerm2](http://iterm2.com). Using this, your terminal can open up with shell sage integrated by default, like so:
+
+{{< video https://youtu.be/mNoZlcBcJg4 >}}
+
+Briefly, here's what tmux control mode does and a couple way to set it up for ShellSage.
+
+iTerm2.app is just another macOS terminal emulator, much like Terminal.app (which comes with the OS), Warp, and others. But in iTerm2, if you invoke tmux with `tmux -CC`, it enables control mode, and then instead of drawing its custom text UI, tmux will send control signals directly to iTerm2, and iTerm2 will render tmux panes using native UI controls. So instead of seeing tmux panes indicated by a text footer, you will just see separate tabs in your window. Instead of switching among panes with a key command (`C-b n`{.verbatim} for next, and so on), you can just switch tabs (with your mouse, or with the usual shortcut of `C-}`{.verbatim}). And similarly, within a tab, you can scroll using native scrollbars.
+
+In other words, when you're using tmux control mode, tmux just provides its functionality while hardly changing your interface at all. So what? In short, _if you use tmux through iTerm2's control mode, then you get the benefit of ShellSage without modifying your terminal interface or learning new commands._
+
+The key to make this effortless is to configure iTerm2 *profiles* which launch directly into tmux, just as if you were launching your shell without tmux in between.
+
+Here's two ways to set this up.
+
+### For connecting to your local machine
+
+First, ensure you have tmux installed on your local machine, and note the path of the tmux executable. I'll assume the path to tmux is `/opt/homebrew/bin/tmux`{.verbatim}.
+
+Second, find the path of the shell you want to open by default. If it is not the default system shell (which is `/bin/zsh`{.verbatim} on macOS), then add a line like the following to your `~/.tmux.conf`{.verbatim} which sets the shell for tmux itself to launch. This line, for instance, sets my tmux to use a newer version of bash provided by homebrew:
+
+    set-option -g default-shell /opt/homebrew/bin/bash
+
+Third, in iTerm2, go to Settings, Profiles, and create a new profile, where under the General section, in the "Command" subsetion, you set the dropdown "Command" value as follows:
+
+    /opt/homebrew/bin/tmux -CC new-session -A -s main
+
+![iTerm profile setup for local tmux](./2024-12-10-shellsage-loves-iterm_assets/iterm_local.png){width=700}
+
+Launching this profile, instead of launching bash directly, will launch tmux into control mode, directing it to create or connect to a tmux session named "main". And because of your earliest setting in `.tmux.conf`{.verbatim}, that will in turn launch your bash shell.
+
+### For connecting to a remote host
+
+The setup is similar for remote hosts.
+
+The only difference is that you should a command like the following, supposing the remote host is named `box`{.verbatim}:
+
+    /usr/bin/ssh -t box 'tmux -CC new-session -A -s main'
+
+![iTerm profile setup for remote tmux](./2024-12-10-shellsage-loves-iterm_assets/iterm_remote.png){width=700}
+
+With this command, launching the profile will ssh into the host, and immediately pass it the same tmux command, reconnecting to or creating the tmux session named "main".
+
+## Other conveniences and details
+
+You can set one of these profiles as your default, so that it launches automatically when you launch iTerm. This way, you can get ShellSage by default, within a familiar terminal UX, with no other changes to your workflow. Or, you can assign keyboard shortcuts to make these profiles easy to launch directly.
+
+Control mode isn't perfect. It does also create an extra "control" window, which hangs around with no purpose besides to enable debugging the control connection (please tell me if you figure out how to get rid of it). And it's not widely supported on other terminal emulators  (though people [keep asking](https://github.com/wez/wezterm/issues/336)). But it doesn't box you in. You can always reconnect to those same sessions using tmux normally from another client, even simultaneously.
+
+But I find in many cases, control mode is great. It takes a fiddly thing (multiplexing, multiple planes, and attaching to sessions, custom keyboard commands) and makes it transparent and frictionless. In this way, it's just like ShellSage, so it's no surprise that they go well together.
+

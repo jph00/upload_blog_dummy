@@ -1,0 +1,46 @@
+---
+title: "Politicians can't change math"
+author: Jeremy Howard
+date: 2024-06-28
+image: attention-eq.png
+description: "It is not possible to provide assurance that a released model can’t be used to cause harm, because a released model can be changed."
+---
+
+## The one fact you need to know
+
+Here is a single mathematical fact that nearly all AI researchers agree on, but most politicians do not know:
+
+::: {.callout-warning}
+## A fact
+
+*It is not possible to provide assurance that a released model can't be used to cause harm, because a released model can be changed.*
+:::
+
+Here, for instance, are two things that are mathematically inconsistent:
+
+1. California's SB 1047 bill requires, under penalty of perjury, the developers assure their "*model has does not have a hazardous capability*", even if up to 25% of the weights are changed
+2. Senator Scott Wiener, the primary backer of the bill, says that they crafted the bill "in a way that ensures that open source developers are able to comply".
+
+Since it isn't possible to have any assurance of absence of hazardous capability after a model has been changed, and there's no way to stop others changing a model, that means it is impossible for any open source developer to comply with this. That isn't a policy question. It's not something any politician or advocate can change. It's math -- which means we have to understand it, and deal with it.
+
+Releasing a model means giving someone a big math function. That person can then change the numbers. When the numbers are changed, the model changes. You can't stop someone from changing the numbers, and you can't create a model where changing the numbers doesn't change the model.
+
+In practice, even changing <0.1% of the numbers totally changes behavior. So if you make a developer responsible for a model, even after it's been changed, then in practice they can't release a model. Imagine asking the same thing of, for instance, microwave manufacturers: "you must promise under penalty of perjury that, even if modified by up to 25%, your product will not cause harm", and you make the manufacturer liable for harms caused by modified microwaves. Instead of releasing microwaves for everyone to use, instead you'd have to go to a microwaving service provider to microwave your food for you -- just like with AI, we’ll only be able to use model service providers like OpenAI.
+
+::: {.callout-tip}
+## We can still regulate AI
+
+We can still regulate AI, *and* allow open source. To do so, we can regulate *use* of AI, rather than *development* of AI. If someone uses AI for election interference, or discriminatory resume screening, or deep fakes, for instance, that *usage* can be made illegal. In fact, most big tech companies don't release models at all -- they make available *systems* (like ChatGPT, or the OpenAI API) that *use* models; all of that can be regulated without blocking open source.
+
+Alternatively, we could make model developers responsible for how others use their model, as long as the model is not changed.
+:::
+
+## So what now?
+
+You get to pick exactly one of these two choices, not both:
+
+1. I want assurance that models can't cause harm.
+2. I don't want to restrict model access to just people working in big tech companies.
+
+As we discussed in [AI Safety and the Age of Dislightenment](https://www.fast.ai/posts/2023-11-07-dislightenment.html), seeking an *assurance* of safety leads to increased centralization, in order to increase control. As that article concluded: "No one can *guarantee* your safety, but together we can work to build a society, with AI, that works for all of us."
+
