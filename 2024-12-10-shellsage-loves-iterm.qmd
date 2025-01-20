@@ -1,6 +1,7 @@
 ---
 title: ShellSage Loves iTerm
 author: Alexis Gallagher
+tags: [tech,cli]
 date: 2024-12-10
 ---
 
