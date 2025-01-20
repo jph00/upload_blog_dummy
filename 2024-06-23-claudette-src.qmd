@@ -3,6 +3,7 @@ title: "A new kind of literate program -- Claudette"
 author: Jeremy Howard
 date: 2024-06-23
 image: claudette-src.png
+tags: [llms,tech]
 description: "Claudette is the first ever 'literate nbdev' project. Its source is a rendered Notebook with callout notes and tips, HTML tables and images, detailed explanations. It explains how and why the code is written the way it is, along with how to use the libraries it depends on."
 ---
 
