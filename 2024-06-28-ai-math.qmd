@@ -3,6 +3,7 @@ title: "Politicians can't change math"
 author: Jeremy Howard
 date: 2024-06-28
 image: attention-eq.png
+tags: [policy, society]
 description: "It is not possible to provide assurance that a released model can’t be used to cause harm, because a released model can be changed."
 ---
 
